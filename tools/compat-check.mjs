@@ -32,19 +32,24 @@ const root = resolve(__dirname, "..");
 // The exact pi version this kit was proven against is recorded here and in docs/contracts.md.
 const PINNED_RANGE = "0.80.x";
 const PINNED_MAJOR_MINOR = "0.80";
+const PI_PACKAGE_NAMES = ["@earendil-works/pi-coding-agent", "pi-coding-agent"];
 
 const probeEnv = { ...process.env, PI_OFFLINE: "1", PI_SKIP_VERSION_CHECK: "1" };
 
 function readPinFromPackageJson() {
   const pkg = JSON.parse(readFileSync(resolve(root, "package.json"), "utf8"));
   // pi is the harness (installed separately, e.g. via brew), NOT a runtime npm
-  // dependency — loopkit takes no runtime dependency on pi (see NOTICE). The pin
-  // lives under optionalDependencies so `npm install` succeeds even while the
-  // 0.80.x line is unpublished on npm, yet the literal pin string is preserved.
-  return (
-    pkg?.optionalDependencies?.["pi-coding-agent"] ??
-    pkg?.dependencies?.["pi-coding-agent"]
-  );
+  // dependency — loopkit takes no runtime dependency on pi (see NOTICE). The
+  // published npm package is scoped; the unscoped key is kept only as a legacy
+  // fallback for older scaffolds.
+  for (const name of PI_PACKAGE_NAMES) {
+    const pin =
+      pkg?.optionalDependencies?.[name] ??
+      pkg?.dependencies?.[name] ??
+      pkg?.devDependencies?.[name];
+    if (pin) return { name, pin };
+  }
+  return { name: PI_PACKAGE_NAMES[0], pin: undefined };
 }
 
 function getInstalledPiVersion() {
@@ -85,8 +90,8 @@ function log(s) {
 }
 
 // --- 1. version gate (loopkit's own gate — never skipped) ---
-const pin = readPinFromPackageJson();
-log(`pinned (package.json):  pi-coding-agent ${pin ?? "<missing>"}`);
+const { name: pinName, pin } = readPinFromPackageJson();
+log(`pinned (package.json):  ${pinName} ${pin ?? "<missing>"}`);
 log(`pinned range (gate):    ${PINNED_RANGE}`);
 
 if (pin !== PINNED_RANGE) {

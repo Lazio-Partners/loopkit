@@ -84,8 +84,12 @@ test("AC2: package.json shape — name/license/bin and the LITERAL 0.80.x pin", 
   assert.equal(pkg.bin["loopkit-readiness"], "tools/loop-readiness.mjs");
   // WHY literal "0.80.x": pi treats MINOR bumps as BREAKING. A caret (^0.80.0) would
   // silently pull a breaking 0.81; a tilde is also wrong here. The pin must be exact.
-  const pin = pkg.dependencies["pi-coding-agent"];
-  assert.equal(pin, "0.80.x", "pi-coding-agent must be pinned to literal 0.80.x");
+  const pin =
+    pkg.optionalDependencies?.["@earendil-works/pi-coding-agent"] ??
+    pkg.dependencies?.["@earendil-works/pi-coding-agent"] ??
+    pkg.optionalDependencies?.["pi-coding-agent"] ??
+    pkg.dependencies?.["pi-coding-agent"];
+  assert.equal(pin, "0.80.x", "pi coding-agent package must be pinned to literal 0.80.x");
   assert.ok(!pin.startsWith("^"), "pin must not use a caret range");
   assert.ok(!pin.startsWith("~"), "pin must not use a tilde range");
 });

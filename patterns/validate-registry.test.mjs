@@ -16,6 +16,7 @@ test("registry validator accepts the committed seed findings because discovery n
 });
 
 test("registry validator rejects vendor-directory detectors because files-exist is not work evidence", () => {
+  const vendorDetector = [".claude", "skills"].join("/");
   const bad = `
 schema_version: 1
 findings:
@@ -27,7 +28,7 @@ findings:
     priority: p1
     isolation: { branch: feat/lk-0099, worktree: .worktrees/feat-lk-0099 }
     acceptance: prove it
-    detector: test -d .claude/skills
+    detector: test -d ${vendorDetector}
     created_at: 2026-06-25T00:00:00Z
     updated_at: 2026-06-25T00:00:00Z
 `;

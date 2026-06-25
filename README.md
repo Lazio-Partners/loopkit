@@ -59,7 +59,7 @@ bash examples/first-loop/run-first-loop.sh
 
 ## Proven pi version
 
-Proven against pi **`0.80.x`** (`pi-coding-agent`). **pi treats MINOR bumps as breaking** (its own `AGENTS.md` says so), so loopkit pins the exact minor and forbids `^`/`~`. Bumping the pin is a tracked finding requiring a green compat-check and a proven example run — see [`CONTRIBUTING.md`](CONTRIBUTING.md).
+Proven against pi **`0.80.x`** (`@earendil-works/pi-coding-agent`). **pi treats MINOR bumps as breaking** (its own `AGENTS.md` says so), so loopkit pins the exact minor and forbids `^`/`~`. Bumping the pin is a tracked finding requiring a green compat-check and a proven example run — see [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 ## License
 

@@ -193,17 +193,15 @@ releases. A `0.80 → 0.81` bump can break the subagent example, `--mode json` o
 shape, hook signatures, or skill-discovery paths loopkit depends on. **SemVer caret
 ranges are unsafe.**
 
-- **Pin:** `package.json` pins **`pi-coding-agent`** to the literal string
+- **Pin:** `package.json` pins **`@earendil-works/pi-coding-agent`** to the literal string
   `0.80.x` (patch allowed, **minor forbidden**, no `^`/`~`). pi ships four packages
   (`pi-ai`, `pi-agent-core`, `pi-coding-agent`, `pi-tui`); we pin
-  **`pi-coding-agent`** (the CLI + SDK). The pin lives under
+  the published scoped coding-agent package (the CLI + SDK). The pin lives under
   **`optionalDependencies`**, not `dependencies`, for two reasons: (1) pi is the
   *harness*, installed separately (e.g. via Homebrew) — loopkit takes **no runtime
-  dependency** on pi (see `NOTICE`); (2) it lets `npm install` succeed even while
-  the `0.80.x` line is unpublished on npm, without weakening the pin — the literal
-  `0.80.x` string is still the single source of truth the compat-check reads and
-  greps assert. A hard `dependencies` entry would fail `npm install` against an
-  unpublished version *and* misstate the dependency relationship.
+  dependency** on pi (see `NOTICE`); (2) it keeps the literal `0.80.x` string as
+  the single source of truth the compat-check reads while avoiding a required
+  runtime dependency relationship.
 - **Gate:** `tools/compat-check.mjs` asserts the installed pi's `MAJOR.MINOR`
   equals the pinned `0.80`. **On mismatch it HARD FAILS** (exit non-zero) with:
   *"loopkit is pinned to pi 0.80.x; you have &lt;X&gt;. Pin or update loopkit, do

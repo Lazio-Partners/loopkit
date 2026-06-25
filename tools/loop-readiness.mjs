@@ -69,11 +69,16 @@ export function runReadiness(repoRoot = process.cwd(), opts = {}) {
 
   const pkgPath = join(root, "package.json");
   const pkg = existsSync(pkgPath) ? readJson(pkgPath) : {};
-  const pin = pkg.dependencies?.["pi-coding-agent"] ?? pkg.optionalDependencies?.["pi-coding-agent"];
+  const pin =
+    pkg.optionalDependencies?.["@earendil-works/pi-coding-agent"] ??
+    pkg.dependencies?.["@earendil-works/pi-coding-agent"] ??
+    pkg.devDependencies?.["@earendil-works/pi-coding-agent"] ??
+    pkg.optionalDependencies?.["pi-coding-agent"] ??
+    pkg.dependencies?.["pi-coding-agent"];
   const compat = runCompat(root, opts);
 
   checks.push(check("compat", "L0", "pi compatibility check", compat.pass, compat.pass ? "compat-check passed" : "compat-check failed", [compat.output].filter(Boolean)));
-  checks.push(check("pin", "L0", "package pin", pin === "0.80.x", `pi-coding-agent pin is ${pin ?? "<missing>"}`));
+  checks.push(check("pin", "L0", "package pin", pin === "0.80.x", `pi package pin is ${pin ?? "<missing>"}`));
   const notice = exists(root, "NOTICE") ? readFileSync(join(root, "NOTICE"), "utf8") : "";
   checks.push(check("notice", "L0", "NOTICE attributions", /pi/i.test(notice) && /loop-engineering/i.test(notice), "NOTICE names pi and loop-engineering"));
 

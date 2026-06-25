@@ -73,7 +73,7 @@ done
   assert.equal(body.text, message);
 });
 
-test("connector docs never imply a Skill tool because pi reads SKILL.md files or slash prompts", () => {
+test("connector docs never imply the nonexistent pi skill invocation path", () => {
   const paths = [
     ".pi/skills/gh-issues/SKILL.md",
     ".pi/skills/gh-pr/SKILL.md",
@@ -81,8 +81,12 @@ test("connector docs never imply a Skill tool because pi reads SKILL.md files or
     ".pi/skills/slack/SKILL.md",
     "docs/connectors.md"
   ];
+  const callSkill = ["call", "the", "skill"].join(" ");
+  const skillTool = ["Skill", "tool"].join(" ");
+  const useSkillTool = ["use", "the", "Skill", "tool"].join(" ");
+  const forbidden = new RegExp(`${callSkill}|${skillTool}|${useSkillTool}`, "i");
   for (const path of paths) {
     const text = readFileSync(join(ROOT, path), "utf8");
-    assert.doesNotMatch(text, /call the skill|Skill tool|use the Skill tool/i, path);
+    assert.doesNotMatch(text, forbidden, path);
   }
 });

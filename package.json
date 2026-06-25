@@ -30,8 +30,8 @@
     "leak-check": "node tools/leak-check.mjs",
     "test": "npm run validate:schemas && node --test tools/*.test.mjs patterns/*.test.mjs tests/**/*.test.mjs examples/first-loop/test/*.test.mjs examples/ship-pipeline/test/*.test.mjs && node tools/check-four-costs.mjs"
   },
-  "dependencies": {
-    "pi-coding-agent": "0.80.x"
+  "optionalDependencies": {
+    "@earendil-works/pi-coding-agent": "0.80.x"
   },
   "devDependencies": {
     "ajv": "8.17.1",
