@@ -1,0 +1,15 @@
+# Filled by a later issue: the CI-gate issue wires the real gates
+# (compat-check + validate-schemas + readiness). STUB: a syntactically valid
+# workflow that runs a single no-op step so the file is loadable.
+name: loop-gate
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  loop-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: no-op placeholder
+        run: echo "loop-gate placeholder -- real gates land in a later issue."

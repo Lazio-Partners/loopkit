@@ -1,0 +1,5 @@
+# loopkit work registry (live). STUB: empty until the discovery pass writes findings.
+# Validates against patterns/registry.schema.json. See patterns/registry.example.yaml
+# for a worked example of the finding shape. Filled at run time by the discovery issue.
+schema_version: 1
+findings: []

@@ -1,0 +1,13 @@
+# Filled by a later issue: the scheduling-recipe issue. STUB only.
+# Commented placeholder systemd timer that will trigger a loopkit service unit running
+# loop/loop-driver.sh on a cadence. No real schedule is defined yet.
+#
+# [Unit]
+# Description=loopkit loop turn (TODO: scheduling issue)
+#
+# [Timer]
+# OnCalendar=TODO
+# Persistent=true
+#
+# [Install]
+# WantedBy=timers.target

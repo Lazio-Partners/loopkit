@@ -1,0 +1,6 @@
+# Filled by a later issue: the scheduling-recipe issue. STUB only.
+# A CI-cron style schedule descriptor (e.g. a GitHub Actions schedule) that re-runs the
+# loop on a cadence. No real schedule is defined yet — this is a parse-clean placeholder.
+schedule_version: 1
+enabled: false
+# TODO (scheduling issue): cron, timezone, command (loop/loop-driver.sh), env, halts.
