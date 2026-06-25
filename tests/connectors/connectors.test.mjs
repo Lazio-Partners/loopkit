@@ -8,7 +8,7 @@ import { spawnSync } from "node:child_process";
 const ROOT = new URL("../..", import.meta.url).pathname;
 
 function run(script, env = {}, args = []) {
-  return spawnSync("bash", [join(ROOT, script), ...args], {
+  return spawnSync("/bin/bash", [join(ROOT, script), ...args], {
     cwd: ROOT,
     env: { ...process.env, ...env },
     encoding: "utf8"
@@ -17,7 +17,7 @@ function run(script, env = {}, args = []) {
 
 test("gh issue discovery fails loud when gh is missing so empty output is never mistaken for no findings", () => {
   const dir = mkdtempSync(join(tmpdir(), "loopkit-connector-"));
-  const res = run(".pi/skills/gh-issues/scripts/list-findings.sh", { PATH: `${dir}:/usr/bin:/bin` });
+  const res = run(".pi/skills/gh-issues/scripts/list-findings.sh", { PATH: dir });
   assert.notEqual(res.status, 0);
   assert.match(res.stderr, /gh is required/);
 });
