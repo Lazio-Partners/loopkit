@@ -43,7 +43,7 @@ loopkit/
 │   ├── validate-schemas.mjs        # validates every example/fixture vs its schema (npm run validate:schemas)
 │   ├── compat-check.mjs            # probes 4 pi surfaces; HARD FAIL on MAJOR.MINOR mismatch
 │   ├── compat-check.test.mjs       # unit test: fake pi version -> assert hard-fail + remediation
-│   └── loop-readiness.mjs          # loopkit-readiness bin STUB (L0–L3 audit is downstream)
+│   └── loop-readiness.mjs          # loopkit-readiness L0-L3 audit
 │
 ├── .pi/                            # (DOWNSTREAM, NOT created by W0-0) pi auto-discovery surface
 │   ├── agents/<name>.md            #   subagent defs (markdown + frontmatter): worker.md, reviewer.md

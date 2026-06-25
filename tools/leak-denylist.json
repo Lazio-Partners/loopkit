@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "patterns": [
+    {
+      "id": "private-issue-key",
+      "regex": "\\bLAZ-\\d+\\b",
+      "flags": "",
+      "reason": "Private issue tracker key; loopkit uses LK-NNNN.",
+      "allow_paths": ["tools/leak-denylist.json", "tools/leak-check.test.mjs"]
+    },
+    {
+      "id": "internal-app-name",
+      "regex": "\\b(Fable|codex)\\b",
+      "flags": "i",
+      "reason": "Internal app or reviewer codename.",
+      "allow_paths": ["tools/leak-denylist.json", "tools/leak-check.test.mjs", "tools/scaffold.test.mjs"]
+    },
+    {
+      "id": "private-domain",
+      "regex": "(laziopartners|laziosearch)\\.com",
+      "flags": "i",
+      "reason": "Private company domain.",
+      "allow_paths": ["tools/leak-denylist.json", "tools/leak-check.test.mjs"]
+    },
+    {
+      "id": "internal-hostname",
+      "regex": "\\b(ovhcloud-server|brad-ubuntu|brad-claw|hermes)\\b",
+      "flags": "i",
+      "reason": "Internal infrastructure hostname.",
+      "allow_paths": ["tools/leak-denylist.json", "tools/leak-check.test.mjs"]
+    },
+    {
+      "id": "tailnet-ip",
+      "regex": "\\b100\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\b",
+      "flags": "",
+      "reason": "Internal tailnet IP.",
+      "allow_paths": ["tools/leak-denylist.json", "tools/leak-check.test.mjs"]
+    },
+    {
+      "id": "claude-path-hardcoded",
+      "regex": "\\.claude/(skills|agents)",
+      "flags": "i",
+      "reason": "Claude Code skill or agent path hardcoded; pi loads from .pi.",
+      "allow_paths": ["docs/", "README.md", "AGENTS.md", "tools/leak-denylist.json", "tools/leak-check.test.mjs"]
+    },
+    {
+      "id": "skill-tool-assumption",
+      "regex": "(Skill tool|call the skill|use the Skill tool)",
+      "flags": "i",
+      "reason": "pi has no Skill tool; read SKILL.md or run /skill:name.",
+      "allow_paths": ["docs/primitive-translation.md", "CONTRIBUTING.md", "tests/docs/primitive-translation.test.mjs", "tools/leak-denylist.json", "tools/leak-check.test.mjs"]
+    },
+    {
+      "id": "cloud-routines-assumption",
+      "regex": "Cloud Routines",
+      "flags": "",
+      "reason": "Claude Code Cloud feature; keep it in the translation map only.",
+      "allow_paths": ["docs/primitive-translation.md", "README.md", "tools/leak-denylist.json", "tools/leak-check.test.mjs"]
+    }
+  ]
+}

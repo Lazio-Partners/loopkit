@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "finding_id": "LK-0001",
+  "verdict": "approve",
+  "confidence": 0.82,
+  "reviewer_model": "reviewer-model",
+  "worker_model": "worker-model",
+  "checks": {
+    "tests": {
+      "ran": true,
+      "passed": true,
+      "summary": "npm test passed"
+    },
+    "baseline": {
+      "ran": true,
+      "passed": true,
+      "summary": "detector failed before the patch and passed after it"
+    },
+    "app_drive": {
+      "ran": false,
+      "passed": true,
+      "summary": "not a UI finding"
+    }
+  },
+  "findings": {
+    "good": ["The deterministic floor passed in the assigned worktree."],
+    "bad": [],
+    "ugly": ["Human review is still required before merge."],
+    "tests": ["npm test"]
+  },
+  "blocking_reasons": [],
+  "human_checkpoint_required": true,
+  "next_action": "open_pr",
+  "evidence": [
+    {
+      "kind": "log",
+      "path": "loop/state/logs/round-001-tests.log"
+    },
+    {
+      "kind": "diff",
+      "ref": "feat/lk-0001"
+    }
+  ]
+}

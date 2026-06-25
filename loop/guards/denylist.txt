@@ -1,0 +1,33 @@
+# loopkit guard denylist — seed.
+#
+# Command patterns the loop must REFUSE to run, even under `--approve`. pi runs with
+# full user permissions and NO sandbox, so this list is a hard floor, not advice.
+#
+# This is a SEED. The enforcing hook (which reads this file and blocks matching
+# tool_call invocations) lands with the driver in a later issue. One pattern per line;
+# lines starting with `#` are comments. Treat every program-derived string as untrusted.
+
+# Catastrophic filesystem wipes
+rm -rf /
+rm -rf ~
+rm -rf --no-preserve-root
+
+# Disk-destroying writes
+mkfs
+dd if=
+
+# Fork bombs / unbounded resource use
+:(){ :|:& };:
+
+# Remote-code-execution-by-pipe (curl|sh style)
+curl * | sh
+curl * | bash
+wget * | sh
+
+# Credential and history exfiltration
+cat ~/.ssh/id_
+cat ~/.aws/credentials
+
+# Destructive git history rewrites pushed to a shared remote
+git push --force
+git push -f

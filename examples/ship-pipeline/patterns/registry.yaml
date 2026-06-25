@@ -1,0 +1,18 @@
+schema_version: 1
+findings:
+  - id: LK-0001
+    title: Add empty-input coverage to the sample parser
+    source: issue_tracker
+    source_ref: local-demo
+    status: open
+    priority: p1
+    isolation:
+      branch: feat/lk-0001
+      worktree: ../.worktrees/feat-lk-0001
+    acceptance: npm test passes and empty input returns an empty list.
+    detector: npm test
+    created_at: 2026-06-25T00:00:00Z
+    updated_at: 2026-06-25T00:00:00Z
+    assigned_turn: null
+    verdict_round: null
+    notes: Generic tracker-backed showcase finding.

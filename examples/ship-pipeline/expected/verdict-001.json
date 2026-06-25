@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "finding_id": "LK-0001",
+  "verdict": "approve",
+  "confidence": 0.84,
+  "reviewer_model": "ship-reviewer-model",
+  "worker_model": "ship-worker-model",
+  "human_checkpoint_required": true,
+  "next_action": "open_pr"
+}

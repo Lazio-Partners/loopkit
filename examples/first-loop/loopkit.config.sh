@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+EXAMPLE_ROOT="${LOOPKIT_EXAMPLE_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)}"
+
+export LOOPKIT_REGISTRY="${LOOPKIT_REGISTRY:-$EXAMPLE_ROOT/patterns/registry.yaml}"
+export LOOPKIT_STATE_DIR="${LOOPKIT_STATE_DIR:-$EXAMPLE_ROOT/loop/state}"
+export LOOPKIT_TARGET_REPO="${LOOPKIT_TARGET_REPO:-$EXAMPLE_ROOT/sandbox}"
+export LOOPKIT_WORKER_MODEL="${LOOPKIT_WORKER_MODEL:-first-loop-worker-model}"
+export LOOPKIT_REVIEWER_MODEL="${LOOPKIT_REVIEWER_MODEL:-first-loop-reviewer-model}"
+export LOOPKIT_MODE="${LOOPKIT_MODE:-dry-run}"
+export LOOPKIT_DAILY_CAP="${LOOPKIT_DAILY_CAP:-1}"
+export LOOPKIT_MAX_CONSECUTIVE_FAILURES="${LOOPKIT_MAX_CONSECUTIVE_FAILURES:-3}"
+export LOOPKIT_WORKER_PATCH="${LOOPKIT_WORKER_PATCH:-$EXAMPLE_ROOT/mocks/worker-patch.diff}"
+export LOOPKIT_REVIEWER_OUTPUT="${LOOPKIT_REVIEWER_OUTPUT:-$EXAMPLE_ROOT/mocks/reviewer-output.txt}"
+export LOOPKIT_TEST_COMMAND="${LOOPKIT_TEST_COMMAND:-npm test}"

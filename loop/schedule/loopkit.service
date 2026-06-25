@@ -1,0 +1,12 @@
+[Unit]
+Description=loopkit scheduled loop turn
+
+[Service]
+Type=oneshot
+WorkingDirectory=__REPO_ROOT__
+# Optional: place LOOPKIT_MODEL and provider keys in __REPO_ROOT__/.env.
+EnvironmentFile=-__REPO_ROOT__/.env
+Environment=LOOPKIT_MODEL=<your-model-id>
+Environment=LOOPKIT_SKILL=/loop-discover
+Environment=LOOPKIT_MAX_ITERATIONS=1
+ExecStart=/usr/bin/env bash __REPO_ROOT__/loop/schedule/run-scheduled.sh

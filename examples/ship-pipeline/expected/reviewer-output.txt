@@ -1,0 +1,30 @@
+Reviewer checked the sample parser and the deterministic floor passed.
+
+```json
+{
+  "schema_version": 1,
+  "finding_id": "LK-0001",
+  "verdict": "approve",
+  "confidence": 0.84,
+  "reviewer_model": "ship-reviewer-model",
+  "worker_model": "ship-worker-model",
+  "checks": {
+    "tests": { "ran": true, "passed": true, "summary": "npm test passed" },
+    "baseline": { "ran": true, "passed": true, "summary": "detector failed before and passed after" },
+    "app_drive": { "ran": false, "passed": true, "summary": "non-UI sample repo" }
+  },
+  "findings": {
+    "good": ["Empty input is handled explicitly."],
+    "bad": [],
+    "ugly": ["Human review is still required before merge."],
+    "tests": ["npm test"]
+  },
+  "blocking_reasons": [],
+  "human_checkpoint_required": true,
+  "next_action": "open_pr",
+  "evidence": [
+    { "kind": "log", "path": "examples/ship-pipeline/loop/state/logs/round-001-tests.log" },
+    { "kind": "diff", "ref": "feat/lk-0001" }
+  ]
+}
+```

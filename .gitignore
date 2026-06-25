@@ -1,5 +1,4 @@
 node_modules/
-package-lock.json
 *.log
 .DS_Store
 
@@ -12,4 +11,6 @@ loop/state/logs/*
 !loop/state/logs/.gitkeep
 loop/state/knowledge/*
 !loop/state/knowledge/.gitkeep
-patterns/registry.yaml
+# patterns/registry.yaml ships as a committed empty stub (schema_version: 1, findings: [])
+# from the scaffold; the discovery pass writes findings into it at run time. It is the
+# live registry, but the empty stub is tracked so the path exists for downstream issues.

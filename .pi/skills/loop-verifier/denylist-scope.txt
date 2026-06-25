@@ -1,0 +1,11 @@
+The verifier refuses approval when the worker path requires any of these actions:
+
+- merging or auto-merging a pull request
+- pushing to main or master
+- force-pushing a shared branch
+- broad deletion such as `rm -rf /` or repository-root destructive cleanup
+- printing, writing, or committing secrets
+- bypassing loopkit caps, circuit breaker, kill-switch, or human checkpoint
+
+The verifier may inspect a command that contains one of these strings in docs or
+tests, but it must not approve a worker plan that executes them.

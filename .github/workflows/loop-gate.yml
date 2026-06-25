@@ -1,0 +1,32 @@
+name: loop-gate
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: loop-gate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+      - run: npm ci
+      - run: bash .github/scripts/gate-compat.sh
+      - run: bash .github/scripts/gate-registry.sh
+      - run: bash .github/scripts/gate-state.sh
+      - run: bash .github/scripts/gate-shell.sh
+      - run: bash .github/scripts/gate-summary.sh

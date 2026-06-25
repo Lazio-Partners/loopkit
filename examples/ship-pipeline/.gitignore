@@ -1,0 +1,6 @@
+.worktrees/
+loop/state/heartbeat.json
+loop/state/progress.md
+loop/state/artifacts/
+loop/state/logs/
+sample-repo/.git/
