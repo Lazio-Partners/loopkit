@@ -45,14 +45,17 @@ Unattended loops accrue four costs — **verification debt, comprehension rot, c
 
 ## Quickstart
 
-> loopkit is early. The behavioral pieces (driver, guards, real readiness audit) land in later releases — this scaffold ships the docs spine, contracts, and a stub readiness check.
-
 ```sh
 npm install
-npx loopkit-readiness   # prints an L0 placeholder line and exits 0 (full audit is later)
+npm test
+npx loopkit-readiness --json
+bash examples/first-loop/run-first-loop.sh
 ```
 
-More commands arrive in later releases. The README will not promise a command that does not yet exist.
+## Examples
+
+- [`examples/first-loop/`](examples/first-loop/README.md): smallest broken-test to reviewed-PR checkpoint.
+- [`examples/ship-pipeline/`](examples/ship-pipeline/README.md): generic team ship pipeline with a tracker-shaped finding.
 
 ## Proven pi version
 

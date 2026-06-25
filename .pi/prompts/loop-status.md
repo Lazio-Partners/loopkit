@@ -1,9 +1,17 @@
-<!-- Filled by a later issue: W2-2 (the human-checkpoint reader of loop/state/*). STUB: frontmatter + TODO body. -->
 ---
 name: loop-status
-description: Human checkpoint — read loop/state/* (heartbeat, progress, latest round) and summarize loop health for a human.
+description: Summarize loop/state heartbeat, latest round, progress, and halt status for a human checkpoint.
 ---
 
-# /loop-status (stub)
+# /loop-status
 
-TODO (W2-2): this prompt reads `loop/state/heartbeat.json`, `loop/state/progress.md`, and the latest `loop/state/artifacts/round-NNN.json` and renders a human-readable checkpoint. It must NOT be treated as complete here. Real content authored by W2-2.
+Read the durable state outside the conversation and summarize it for a human.
+
+1. Read `loop/state/heartbeat.json` if present.
+2. Read the latest `loop/state/artifacts/round-NNN.json` if present.
+3. Read the tail of `loop/state/progress.md` if present.
+4. Report status, current finding, last turn, consecutive failures, cap usage,
+   latest verdict, next action, and whether `loop/guards/STOP` is present.
+
+Use plain English. Do not ask a model whether the loop is healthy when the state
+already records a halt, failure count, or cap decision.

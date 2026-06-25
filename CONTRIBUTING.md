@@ -32,7 +32,9 @@ loopkit takes contract *shapes* from pi, openloop, and loop-engineering by **re-
 npx loopkit-readiness   # or: npm run readiness
 ```
 
-Today this is a **stub** that prints an `L0` placeholder and exits 0. The real L0–L3 audit lands in a later issue.
+`loopkit-readiness` reports L0-L3 readiness and can emit JSON for CI. A fresh
+checkout may fail L0 if the installed pi minor does not match the pinned
+`0.80.x` line; that is intentional.
 
 ## Conventions
 

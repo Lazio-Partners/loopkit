@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "status": "idle",
+  "last_turn": 1,
+  "consecutive_failures": 0,
+  "turns_today": 1,
+  "daily_cap": 1,
+  "tokens_today": 0,
+  "current_finding": null,
+  "halt_reason": null
+}

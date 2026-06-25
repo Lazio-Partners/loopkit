@@ -1,0 +1,12 @@
+loopkit kill-switch
+
+Create this file to halt the next turn:
+
+  touch loop/guards/STOP
+
+Remove it when a human is ready to allow another turn:
+
+  rm loop/guards/STOP
+
+The driver and scheduled wrapper check for STOP before spawning pi. A STOP halt
+is operationally successful and exits 0; it is not a failing loop.

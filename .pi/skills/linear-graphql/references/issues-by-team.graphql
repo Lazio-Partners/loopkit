@@ -1,0 +1,9 @@
+query IssuesByTeam($teamKey: String!) {
+  issues(filter: { team: { key: { eq: $teamKey } }, state: { type: { neq: "completed" } } }, first: 25) {
+    nodes {
+      identifier
+      title
+      url
+    }
+  }
+}

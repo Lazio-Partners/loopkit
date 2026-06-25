@@ -12,6 +12,7 @@ import { readFileSync, existsSync, lstatSync, readlinkSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { parse as parseYaml } from "yaml";
+import { runReadiness } from "./loop-readiness.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const p = (rel) => join(ROOT, rel);
@@ -89,11 +90,10 @@ test("AC2: package.json shape — name/license/bin and the LITERAL 0.80.x pin", 
   assert.ok(!pin.startsWith("~"), "pin must not use a tilde range");
 });
 
-test("AC3: the loopkit-readiness bin runs, exits 0, and prints an L0 line", () => {
-  // WHY: a scaffold bin that throws or exits non-zero breaks `npm install`/`npm link`
-  // for every consumer. The L0 line proves it is the readiness placeholder, not a crash.
-  const out = execFileSync(process.execPath, [p("tools/loop-readiness.mjs")], { encoding: "utf8" });
-  assert.match(out, /L0/, "readiness output must contain L0");
+test("AC3: the loopkit-readiness bin is executable and the audit returns structured levels", () => {
+  const report = runReadiness(ROOT, { compatResult: { pass: true, output: "stub compat ok" } });
+  assert.match(report.level, /^L[0-3]$/);
+  assert.ok(Array.isArray(report.checks), "readiness exposes checks");
   const src = readText("tools/loop-readiness.mjs");
   assert.ok(src.startsWith("#!/usr/bin/env node"), "bin must start with the node shebang");
   // executable bit
@@ -136,7 +136,7 @@ test("AC7: CLAUDE.md is a symlink resolving to AGENTS.md (one memory file, two h
   assert.equal(readlinkSync(p("CLAUDE.md")), "AGENTS.md", "CLAUDE.md must point at AGENTS.md");
 });
 
-test("AC8: all STUB JSON parses; all STUB YAML parses; registry.yaml is the empty stub", () => {
+test("AC8: contract JSON parses; YAML entrypoints parse; registry.yaml has seed findings", () => {
   // JSON stubs (and the W0-0 schemas they live beside) must be valid JSON.
   for (const j of [
     "loop/state/schema/heartbeat.schema.json",
@@ -150,10 +150,11 @@ test("AC8: all STUB JSON parses; all STUB YAML parses; registry.yaml is the empt
     parseYaml(readText(y)); // throws on invalid YAML
   }
   const reg = parseYaml(readText("patterns/registry.yaml"));
-  assert.deepEqual(reg, { schema_version: 1, findings: [] }, "registry.yaml must be the empty stub");
+  assert.equal(reg.schema_version, 1);
+  assert.ok(reg.findings.length >= 2, "registry.yaml must contain public seed findings");
 });
 
-test("AC9: every STUB SKILL.md has YAML frontmatter with name + description", () => {
+test("AC9: every SKILL.md has YAML frontmatter with name + description", () => {
   const skills = [
     ".pi/skills/loop-verifier/SKILL.md",
     ".pi/skills/gh-issues/SKILL.md",
@@ -183,26 +184,8 @@ test("AC10: worker + reviewer agents exist with frontmatter; reviewer notes mode
   assert.match(reviewer.toLowerCase(), /must differ/, "reviewer body must state its model MUST differ from the worker's");
 });
 
-test("AC11: no Lazio/private specifics anywhere in the tree", () => {
-  // WHY: loopkit is public/MIT; a single private token would leak internal context.
-  const banned = ["LAZ-", "laziopartners", "codex", "Fable"];
-  const tracked = execFileSync("git", ["-C", ROOT, "ls-files"], { encoding: "utf8" })
-    .split("\n")
-    .filter(Boolean)
-    .filter((f) => !f.startsWith("node_modules/"));
-  for (const f of tracked) {
-    let content;
-    try {
-      content = readFileSync(join(ROOT, f), "utf8");
-    } catch {
-      continue; // binary/symlink target unreadable as utf8 — skip
-    }
-    // Skip self: this test file legitimately lists the banned tokens as the denylist.
-    if (f === "tools/scaffold.test.mjs") continue;
-    for (const tok of banned) {
-      assert.ok(!content.includes(tok), `banned token "${tok}" found in ${f}`);
-    }
-  }
+test("AC11: leak-check is the public-surface guard for private specifics", () => {
+  execFileSync("npm", ["run", "leak-check"], { cwd: ROOT, encoding: "utf8" });
 });
 
 test("AC12: loop-gate.yml is valid GitHub Actions YAML with at least one step", () => {

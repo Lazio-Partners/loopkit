@@ -1,9 +1,19 @@
-<!-- Filled by a later issue: W1-1 (the reviewer-invocation entry). STUB: frontmatter + TODO body. -->
 ---
 name: loop-verify
-description: Verification move — invoke the different-model reviewer subagent and capture its verdict (verdict.schema.json).
+description: Invoke the different-model reviewer and capture a schema-valid verdict for one LK-NNNN finding.
 ---
 
-# /loop-verify (stub)
+# /loop-verify
 
-TODO (W1-1): this prompt invokes the reviewer subagent (`.pi/agents/reviewer.md`), whose model MUST differ from the worker's, and writes the resulting verdict. It must NOT be treated as complete here. Real content authored by W1-1.
+Verification is independent. The reviewer model must differ from the worker
+model and can say no.
+
+1. Read `.pi/agents/reviewer.md`.
+2. Read `.pi/skills/loop-verifier/SKILL.md`.
+3. Give the reviewer the finding, worktree, branch, worker model, reviewer model,
+   worker handoff, and deterministic floor command.
+4. Require exactly one trailing fenced `json` verdict block.
+5. Validate the block against `loop/state/schema/verdict.schema.json`.
+
+An `approve` still stops at a human checkpoint and routes to `open_pr`; it never
+means merge.

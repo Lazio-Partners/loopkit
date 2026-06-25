@@ -1,9 +1,21 @@
-<!-- Filled by a later issue: the connectors issue authors the body. STUB: valid frontmatter + TODO body. -->
 ---
 name: slack
-description: Post loop status and human-checkpoint notifications to Slack via its Web API using curl (a CLI tool documented in a skill — loopkit ships no MCP server).
+description: Post loop checkpoint notifications to Slack through a webhook. Use when a turn needs human attention. Read this SKILL.md, then run scripts/notify.sh.
 ---
 
-# slack (stub)
+# slack
 
-TODO: document the Slack Web API calls (via `curl`) the loop uses to notify a human at checkpoints and halts. This is a CLI-tool-in-a-skill; there is no MCP server.
+Default path: send a webhook message.
+
+Required env:
+
+- `SLACK_WEBHOOK_URL`
+- `SLACK_MESSAGE`, or pass the message as argv
+
+```sh
+SLACK_WEBHOOK_URL=... scripts/notify.sh "Round 007 needs a human checkpoint"
+```
+
+Teams that prefer bot tokens can use Slack `chat.postMessage` with
+`SLACK_BOT_TOKEN`, but the webhook path is the default because it is easier to
+audit and needs no extra SDK.

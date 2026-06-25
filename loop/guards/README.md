@@ -1,17 +1,15 @@
-<!-- Filled by a later issue: the guards issue authors enforcement. STUB: documents the kill-switch; the enforcing checks land with the driver. -->
+# loop guards
 
-# loopkit guards
+loopkit has three independent halts. They are intentionally boring: each can be
+checked without asking a model whether it should stop.
 
-The guards enforce the limits behind the **four costs**. Three independent halts can stop the loop: the **daily turn cap** (`caps.sh`), the **circuit breaker** (`circuit-breaker.sh`, a consecutive-failure ceiling), and the **kill-switch** (below). The command **denylist** (`denylist.txt`) refuses dangerous commands even under `--approve`.
+1. Daily cap: `loop/guards/caps.sh` reads `loop/state/heartbeat.json`.
+2. Circuit breaker: `loop/guards/circuit-breaker.sh` reads consecutive failures.
+3. Presence-of-file kill-switch: `loop/guards/STOP`.
 
-## Kill-switch (presence-of-file)
+This directory deliberately does **not** ship `STOP`. Creating that file is the
+human emergency brake and the driver exits zero with `status: halted` so a
+scheduler does not keep sending failure mail.
 
-The loop honors a hard halt by the **presence of a file**: if `loop/guards/STOP` exists, **every turn aborts at the top of the driver** before any work runs. To stop a running loop, create that file:
-
-```sh
-touch loop/guards/STOP
-```
-
-To resume, remove it (`rm loop/guards/STOP`).
-
-> **This scaffold deliberately does NOT ship a `STOP` file** — shipping one would halt the loop by definition. The enforcing check (the line in `loop/loop-driver.sh` that aborts when `loop/guards/STOP` exists) lands with the driver in a later issue. This README documents the contract so the driver author and operators agree on it.
+See `denylist.txt` for commands the driver/reviewer must refuse, and
+`kill-switch` for the operations note.

@@ -1,0 +1,7 @@
+Mock worker implemented LK-0001 in the assigned worktree.
+
+Files changed:
+- src/slugify.js
+
+Commands:
+- npm test

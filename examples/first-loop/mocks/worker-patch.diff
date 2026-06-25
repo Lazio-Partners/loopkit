@@ -1,0 +1,12 @@
+diff --git a/src/slugify.js b/src/slugify.js
+index 30cd855..ddf05f2 100644
+--- a/src/slugify.js
++++ b/src/slugify.js
+@@ -1,3 +1,6 @@
+ export function slugify(input) {
+-  return String(input).toLowerCase().replace(/\s+/g, "-");
++  return String(input)
++    .trim()
++    .toLowerCase()
++    .replace(/\s+/g, "-");
+ }

@@ -1,9 +1,22 @@
-<!-- Filled by a later issue: W2-4 (the discovery pass). STUB: frontmatter + TODO body. -->
 ---
 name: loop-discover
-description: Discovery move — scan sources (CI, tracker, commits, review follow-ups) and write each unit of work as a registry finding (LK-NNNN).
+description: Find one new unit of work from configured sources and append it to patterns/registry.yaml as an LK-NNNN finding.
 ---
 
-# /loop-discover (stub)
+# /loop-discover
 
-TODO (W2-4): implement the discovery pass. Scan the configured sources, dedupe against `patterns/registry.yaml`, and append new findings with fresh `LK-NNNN` ids. This prompt is a placeholder so the slash-prompt path exists; the real body is authored by W2-4.
+Discovery turns outside signals into registry findings. Prefer one high-quality
+finding over a batch.
+
+1. Read configured connector skills such as `.pi/skills/gh-issues/SKILL.md` or
+   `.pi/skills/linear-graphql/SKILL.md` when the source is an issue tracker.
+2. Inspect CI, tracker output, recent commits, or review follow-ups. Use explicit
+   commands and keep their output as evidence.
+3. Dedupe against `patterns/registry.yaml`.
+4. Append exactly one finding with a fresh `LK-NNNN` id, `source`, `source_ref`,
+   `priority`, `isolation.branch`, `isolation.worktree`, `acceptance`, and a
+   re-runnable `detector`.
+5. Run `node patterns/validate-registry.mjs`.
+
+Early exit is correct when no source yields actionable work. Never use a
+vendor-directory existence check as the detector; the detector must prove work.

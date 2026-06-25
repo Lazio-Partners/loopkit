@@ -20,10 +20,15 @@
     "loopkit-readiness": "tools/loop-readiness.mjs"
   },
   "scripts": {
+    "lint": "node tools/leak-check.mjs",
     "readiness": "node tools/loop-readiness.mjs",
     "validate:schemas": "node tools/validate-schemas.mjs",
+    "validate:registry": "node patterns/validate-registry.mjs",
     "compat-check": "node tools/compat-check.mjs",
-    "test": "node tools/validate-schemas.mjs && node tools/compat-check.test.mjs && node --test tools/scaffold.test.mjs tests/docs/primitive-translation.test.mjs tools/check-four-costs.mjs"
+    "test:connectors": "node --test tests/connectors/*.test.mjs",
+    "test:schedule": "node --test tests/schedule/*.test.mjs",
+    "leak-check": "node tools/leak-check.mjs",
+    "test": "npm run validate:schemas && node --test tools/*.test.mjs patterns/*.test.mjs tests/**/*.test.mjs examples/first-loop/test/*.test.mjs examples/ship-pipeline/test/*.test.mjs && node tools/check-four-costs.mjs"
   },
   "dependencies": {
     "pi-coding-agent": "0.80.x"

@@ -1,0 +1,5 @@
+schema_version: 1
+findings:
+  - id: LK-0001
+    status: in_review
+    verdict_round: 1

@@ -1,0 +1,7 @@
+.runtime/
+.worktrees/
+loop/state/heartbeat.json
+loop/state/progress.md
+loop/state/artifacts/
+loop/state/logs/
+sandbox/.git/

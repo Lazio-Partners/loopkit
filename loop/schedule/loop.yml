@@ -1,6 +1,36 @@
-# Filled by a later issue: the scheduling-recipe issue. STUB only.
-# A CI-cron style schedule descriptor (e.g. a GitHub Actions schedule) that re-runs the
-# loop on a cadence. No real schedule is defined yet — this is a parse-clean placeholder.
-schedule_version: 1
-enabled: false
-# TODO (scheduling issue): cron, timezone, command (loop/loop-driver.sh), env, halts.
+name: loopkit scheduled turn
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 * * * *"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: loopkit-scheduled-turn
+  cancel-in-progress: false
+
+jobs:
+  loop:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+      - run: npm ci
+      - name: Run one scheduled loop turn
+        env:
+          LOOPKIT_MODEL: ${{ secrets.LOOPKIT_MODEL }}
+          LOOPKIT_SKILL: /loop-discover
+          LOOPKIT_MAX_ITERATIONS: "1"
+          PI_API_KEY: ${{ secrets.PI_API_KEY }}
+        run: bash loop/schedule/run-scheduled.sh
+      # loopkit never auto-merges; a human reviews and merges.
