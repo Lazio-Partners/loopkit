@@ -19,5 +19,5 @@ if [[ -z "$message" ]]; then
 fi
 
 body="$(jq -n --arg text "$message" '{text:$text}')"
-curl -sS -X POST -H "Content-Type: application/json" --data "$body" "$SLACK_WEBHOOK_URL" >/dev/null
+curl --fail-with-body -sS -X POST -H "Content-Type: application/json" --data "$body" "$SLACK_WEBHOOK_URL" >/dev/null
 echo "slack: notification sent"

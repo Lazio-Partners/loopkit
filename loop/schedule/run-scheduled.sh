@@ -25,6 +25,7 @@ export PI_OFFLINE=1
 export PI_SKIP_VERSION_CHECK=1
 
 stop_file="$REPO_ROOT/loop/guards/STOP"
+cd "$REPO_ROOT"
 
 for ((iteration = 1; iteration <= LOOPKIT_MAX_ITERATIONS; iteration += 1)); do
   if [[ -f "$stop_file" ]]; then

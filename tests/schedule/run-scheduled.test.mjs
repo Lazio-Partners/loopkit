@@ -7,6 +7,7 @@ import { tmpdir } from "node:os";
 import { mkdtempSync } from "node:fs";
 
 const ROOT = new URL("../..", import.meta.url).pathname;
+const ROOT_DIR = ROOT.replace(/\/$/, "");
 const SCRIPT = join(ROOT, "loop/schedule/run-scheduled.sh");
 const STOP = join(ROOT, "loop/guards/STOP");
 
@@ -16,6 +17,7 @@ function makeStubPi(dir, exitCode = 0) {
 set -euo pipefail
 echo "argv:$*" >> "$RECORDER"
 echo "env:$PI_OFFLINE:$PI_SKIP_VERSION_CHECK" >> "$RECORDER"
+echo "pwd:$PWD" >> "$RECORDER"
 exit ${exitCode}
 `);
   chmodSync(bin, 0o755);
@@ -57,6 +59,7 @@ test("stub pi sees named slash command, approve flag, model, resume flag, and cl
   assert.equal((text.match(/argv:/g) ?? []).length, 2);
   assert.match(text, /-p \/loop-discover --approve --model model-a -c/);
   assert.match(text, /env:1:1/);
+  assert.match(text, new RegExp(`pwd:${ROOT_DIR.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`));
 });
 
 test("fresh first iteration omits resume but later iterations resume the same thread", () => {

@@ -73,6 +73,21 @@ done
   assert.equal(body.text, message);
 });
 
+test("Slack notification fails loud on webhook HTTP errors", () => {
+  const dir = mkdtempSync(join(tmpdir(), "loopkit-connector-"));
+  const argsPath = join(dir, "curl-args.txt");
+  writeFileSync(join(dir, "curl"), `#!/usr/bin/env bash
+set -euo pipefail
+printf "%s\\n" "$*" > "${argsPath}"
+exit 22
+`);
+  chmodSync(join(dir, "curl"), 0o755);
+  const res = run(".pi/skills/slack/scripts/notify.sh", { PATH: `${dir}:${process.env.PATH}`, SLACK_WEBHOOK_URL: "https://example.test/hook" }, ["hello"]);
+  assert.equal(res.status, 22);
+  assert.doesNotMatch(res.stdout, /notification sent/);
+  assert.match(readFileSync(argsPath, "utf8"), /--fail-with-body/);
+});
+
 test("connector docs never imply the nonexistent pi skill invocation path", () => {
   const paths = [
     ".pi/skills/gh-issues/SKILL.md",
