@@ -1,0 +1,44 @@
+loopkit
+Copyright (c) 2026 loopkit contributors
+
+This product is licensed under the MIT License (see LICENSE).
+
+------------------------------------------------------------------------
+Attributions
+------------------------------------------------------------------------
+
+loopkit borrows ideas and on-disk/contract SHAPES from the projects below by
+RE-IMPLEMENTATION against its own frozen contracts. It does NOT take a runtime
+dependency on any of them, and it does not redistribute their source. These
+attributions are provided as a courtesy and, where required by license, as an
+obligation.
+
+1) pi (pi-coding-agent) — MIT License
+   Copyright (c) 2025 Mario Zechner
+   https://github.com/earendil-works/pi
+   loopkit targets pi as its harness and pins pi-coding-agent on the 0.80.x line.
+
+2) loop-engineering — MIT License
+   Copyright (c) cobusgreyling
+   https://github.com/cobusgreyling/loop-engineering
+   loopkit borrows the "machine-readable work registry, validated in CI" pattern.
+   loopkit forks out two footguns: a vendor-directory-grep detector (loopkit
+   requires a re-runnable, repo-structure-aware detector command instead) and a
+   dogfood that auto-merges at zero approvals (loopkit keeps a human checkpoint
+   via its never-auto-merge invariant).
+
+3) openloop — Apache License 2.0
+   https://github.com/thu-nmrc/openloop
+   loopkit borrows the on-disk loop-state layout (heartbeat / progress / per-turn
+   round artifact / logs / knowledge). Per Apache-2.0 section 4(d), openloop's
+   NOTICE text is preserved verbatim below. loopkit hardens, rather than copies:
+   it does not reuse openloop's dead stall-detection, its gameable stdout-regex
+   OOM/liveness detection, or its shell=True interpolation of program-derived
+   error strings.
+
+   --- begin openloop NOTICE (preserved verbatim per Apache-2.0 §4) ---
+   OpenLoop
+   Copyright 2026 OpenLoop Contributors
+
+   This product includes software developed by the OpenLoop Contributors.
+   --- end openloop NOTICE ---

@@ -1,0 +1,15 @@
+node_modules/
+package-lock.json
+*.log
+.DS_Store
+
+# Runtime loop state is written here at run time; keep the dirs (via .gitkeep)
+# but ignore the generated state files.
+loop/state/heartbeat.json
+loop/state/progress.md
+loop/state/artifacts/round-*.json
+loop/state/logs/*
+!loop/state/logs/.gitkeep
+loop/state/knowledge/*
+!loop/state/knowledge/.gitkeep
+patterns/registry.yaml

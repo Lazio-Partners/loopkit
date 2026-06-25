@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://loopkit.dev/schema/round.schema.json",
+  "title": "loopkit round",
+  "description": "Immutable per-turn report (loop/state/artifacts/round-NNN.json). Embeds a full verdict via $ref.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "round",
+    "finding_id",
+    "started_at",
+    "ended_at",
+    "worktree",
+    "branch",
+    "worker",
+    "reviewer",
+    "verdict",
+    "outcome",
+    "caps",
+    "guard_events",
+    "error"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "round": { "type": "integer" },
+    "finding_id": {
+      "type": "string",
+      "pattern": "^LK-\\d{4}$"
+    },
+    "started_at": { "type": "string", "format": "date-time" },
+    "ended_at": { "type": "string", "format": "date-time" },
+    "worktree": { "type": "string" },
+    "branch": { "type": "string" },
+    "worker": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model", "tools_allowed", "tokens", "stop_reason"],
+      "properties": {
+        "model": { "type": "string" },
+        "tools_allowed": { "type": "array", "items": { "type": "string" } },
+        "tokens": { "type": "integer", "minimum": 0 },
+        "stop_reason": { "type": "string" }
+      }
+    },
+    "reviewer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model", "tokens", "stop_reason"],
+      "properties": {
+        "model": { "type": "string" },
+        "tokens": { "type": "integer", "minimum": 0 },
+        "stop_reason": { "type": "string" }
+      }
+    },
+    "verdict": { "$ref": "https://loopkit.dev/schema/verdict.schema.json" },
+    "outcome": {
+      "type": "string",
+      "enum": ["approve", "reject", "needs_changes", "error"]
+    },
+    "caps": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tokens_turn", "duration_s", "hit_cap"],
+      "properties": {
+        "tokens_turn": { "type": "integer", "minimum": 0 },
+        "duration_s": { "type": "number", "minimum": 0 },
+        "hit_cap": { "type": "boolean" }
+      }
+    },
+    "guard_events": { "type": "array", "items": { "type": "string" } },
+    "error": { "type": ["string", "null"] }
+  }
+}

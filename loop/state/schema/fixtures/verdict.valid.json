@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "finding_id": "LK-0007",
+  "verdict": "approve",
+  "confidence": 0.82,
+  "reviewer_model": "provider/reviewer-model",
+  "worker_model": "provider/worker-model",
+  "checks": {
+    "tests": { "ran": true, "passed": true, "summary": "12/12 passing" },
+    "baseline": { "ran": true, "passed": true, "summary": "no regressions" },
+    "app_drive": { "ran": true, "passed": true, "summary": "smoke run exited 0" }
+  },
+  "findings": {
+    "good": ["schema validates against fixtures"],
+    "bad": [],
+    "ugly": [],
+    "tests": ["validate-schemas.mjs covers the $ref resolution"]
+  },
+  "blocking_reasons": [],
+  "human_checkpoint_required": true,
+  "next_action": "open_pr",
+  "evidence": [
+    { "kind": "test_output", "path": "loop/state/logs/round-001.log" },
+    { "kind": "commit", "ref": "abc1234" }
+  ]
+}

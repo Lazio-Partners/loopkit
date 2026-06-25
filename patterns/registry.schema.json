@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://loopkit.dev/schema/registry.schema.json",
+  "title": "loopkit work registry",
+  "description": "The machine-readable work registry (patterns/registry.yaml). Registry-validated-in-CI pattern borrowed by re-implementation from loop-engineering (MIT), forked clean of its vendor-dir-grep detector and 0-approval auto-merge.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "findings"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "findings": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/finding" }
+    }
+  },
+  "$defs": {
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "source",
+        "source_ref",
+        "status",
+        "priority",
+        "isolation",
+        "acceptance",
+        "detector",
+        "created_at",
+        "updated_at"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^LK-\\d{4}$",
+          "description": "Universal join key. Equals verdict.finding_id and round.finding_id."
+        },
+        "title": { "type": "string", "minLength": 1 },
+        "source": {
+          "type": "string",
+          "enum": ["ci", "issue_tracker", "commit", "review_followup", "manual"]
+        },
+        "source_ref": { "type": "string" },
+        "status": {
+          "type": "string",
+          "enum": [
+            "open",
+            "in_progress",
+            "in_review",
+            "needs_changes",
+            "approved",
+            "parked",
+            "done",
+            "wontfix"
+          ]
+        },
+        "priority": {
+          "type": "string",
+          "enum": ["p0", "p1", "p2", "p3"]
+        },
+        "isolation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["branch", "worktree"],
+          "properties": {
+            "branch": { "type": "string" },
+            "worktree": { "type": "string" }
+          }
+        },
+        "acceptance": { "type": "string" },
+        "detector": {
+          "type": "string",
+          "description": "A re-runnable, pi/repo-structure-aware command. Never a grep for agent-vendor config dirs (e.g. .claude/.grok)."
+        },
+        "created_at": { "type": "string", "format": "date-time" },
+        "updated_at": { "type": "string", "format": "date-time" },
+
+        "assigned_turn": { "type": ["integer", "null"] },
+        "verdict_round": { "type": ["integer", "null"] },
+        "notes": { "type": "string" },
+
+        "cadence": { "type": "string" },
+        "risk": {
+          "type": "string",
+          "enum": ["low", "medium", "high"]
+        },
+        "tools": { "type": "array", "items": { "type": "string" } },
+        "skills": { "type": "array", "items": { "type": "string" } },
+        "human_gates": { "type": "array", "items": { "type": "string" } },
+        "week_one_mode": {
+          "type": "string",
+          "enum": ["dry_run", "live"]
+        },
+        "token_cost": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mode", "daily_cap", "early_exit_required"],
+          "properties": {
+            "mode": {
+              "type": "string",
+              "enum": ["noop", "report", "action"]
+            },
+            "daily_cap": { "type": "integer", "minimum": 0 },
+            "early_exit_required": { "type": "boolean" }
+          }
+        }
+      }
+    }
+  }
+}

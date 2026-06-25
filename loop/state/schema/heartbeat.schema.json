@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://loopkit.dev/schema/heartbeat.schema.json",
+  "title": "loopkit heartbeat",
+  "description": "Compact machine state, overwritten each turn (loop/state/heartbeat.json). On-disk layout borrowed by re-implementation from openloop (Apache-2.0).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "status",
+    "last_turn",
+    "last_heartbeat",
+    "consecutive_failures",
+    "max_consecutive_failures",
+    "turns_today",
+    "daily_cap",
+    "tokens_today",
+    "current_finding",
+    "halt_reason"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "status": {
+      "type": "string",
+      "enum": ["idle", "running", "blocked", "halted"]
+    },
+    "last_turn": { "type": "integer" },
+    "last_heartbeat": { "type": "string", "format": "date-time" },
+    "consecutive_failures": { "type": "integer", "minimum": 0 },
+    "max_consecutive_failures": { "type": "integer", "minimum": 1 },
+    "turns_today": { "type": "integer", "minimum": 0 },
+    "daily_cap": { "type": "integer", "minimum": 1 },
+    "tokens_today": { "type": "integer", "minimum": 0 },
+    "current_finding": {
+      "type": ["string", "null"],
+      "pattern": "^LK-\\d{4}$"
+    },
+    "halt_reason": { "type": ["string", "null"] }
+  }
+}

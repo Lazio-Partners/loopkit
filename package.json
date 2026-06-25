@@ -1,0 +1,26 @@
+{
+  "name": "loopkit",
+  "version": "0.0.0",
+  "description": "A public, MIT-licensed toolkit that brings loop engineering to the pi coding-agent harness: schemas, a verification-first driver contract, and guards for the four costs.",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "loopkit-readiness": "tools/loop-readiness.mjs"
+  },
+  "scripts": {
+    "validate:schemas": "node tools/validate-schemas.mjs",
+    "compat-check": "node tools/compat-check.mjs",
+    "test": "node tools/validate-schemas.mjs && node tools/compat-check.test.mjs"
+  },
+  "optionalDependencies": {
+    "pi-coding-agent": "0.80.x"
+  },
+  "devDependencies": {
+    "ajv": "8.17.1",
+    "ajv-formats": "3.0.1",
+    "yaml": "2.5.1"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

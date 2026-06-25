@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "status": "running",
+  "last_turn": 14,
+  "last_heartbeat": "2026-06-25T17:04:33Z",
+  "consecutive_failures": 0,
+  "max_consecutive_failures": 3,
+  "turns_today": 14,
+  "daily_cap": 40,
+  "tokens_today": 318422,
+  "current_finding": "LK-0007",
+  "halt_reason": null
+}

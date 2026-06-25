@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "round": 1,
+  "finding_id": "LK-0007",
+  "started_at": "2026-06-25T16:58:00Z",
+  "ended_at": "2026-06-25T17:04:33Z",
+  "worktree": ".worktrees/lk-0007",
+  "branch": "feat/lk-0007",
+  "worker": {
+    "model": "provider/worker-model",
+    "tools_allowed": ["read", "edit", "write", "bash"],
+    "tokens": 211044,
+    "stop_reason": "end_turn"
+  },
+  "reviewer": {
+    "model": "provider/reviewer-model",
+    "tokens": 107378,
+    "stop_reason": "end_turn"
+  },
+  "verdict": {
+    "schema_version": 1,
+    "finding_id": "LK-0007",
+    "verdict": "approve",
+    "confidence": 0.82,
+    "reviewer_model": "provider/reviewer-model",
+    "worker_model": "provider/worker-model",
+    "checks": {
+      "tests": { "ran": true, "passed": true, "summary": "12/12 passing" },
+      "baseline": { "ran": true, "passed": true, "summary": "no regressions" },
+      "app_drive": { "ran": true, "passed": true, "summary": "smoke run exited 0" }
+    },
+    "findings": {
+      "good": ["schema validates against fixtures"],
+      "bad": [],
+      "ugly": [],
+      "tests": ["validate-schemas.mjs covers the $ref resolution"]
+    },
+    "blocking_reasons": [],
+    "human_checkpoint_required": true,
+    "next_action": "open_pr",
+    "evidence": [
+      { "kind": "test_output", "path": "loop/state/logs/round-001.log" },
+      { "kind": "commit", "ref": "abc1234" }
+    ]
+  },
+  "outcome": "approve",
+  "caps": {
+    "tokens_turn": 318422,
+    "duration_s": 393.0,
+    "hit_cap": false
+  },
+  "guard_events": [],
+  "error": null
+}
