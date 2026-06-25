@@ -23,7 +23,7 @@
     "readiness": "node tools/loop-readiness.mjs",
     "validate:schemas": "node tools/validate-schemas.mjs",
     "compat-check": "node tools/compat-check.mjs",
-    "test": "node tools/validate-schemas.mjs && node tools/compat-check.test.mjs && node --test tools/scaffold.test.mjs"
+    "test": "node tools/validate-schemas.mjs && node tools/compat-check.test.mjs && node --test tools/scaffold.test.mjs tests/docs/primitive-translation.test.mjs"
   },
   "dependencies": {
     "pi-coding-agent": "0.80.x"
